@@ -13,7 +13,7 @@ navigator.onLine
 navigator.userAgent
 返回当前浏览器的user agent字符串.
 
-msSaveBlob()方法
+msSaveBlob()方法 ie10+
 保存文件或者blob到硬盘
 ```javascript
 句法
