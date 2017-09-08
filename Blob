@@ -1,0 +1,32 @@
+Blob对象 ie10+
+
+一个 Blob对象表示一个不可变的, 原始数据的类似文件对象。
+Blob表示的数据不一定是一个JavaScript原生格式。 File 接口基于Blob，继承 blob功能并将其扩展为支持用户系统上的文件
+
+```javacript
+var geojson = format.writeFeatures(features,{
+	dataProjection:"EPSG:4326",
+	featureProjection:"EPSG:3857"
+})
+var filename="data.geojson";
+var blob = new Blob([geojson], { type: "text/plain;charset=utf-8;" });
+
+type，默认值为 ""，它代表了将会被放入到blob中的数组内容的MIME类型。
+```
+
+使用类型数组和 Blob 创建一个 URL
+var url = URL.createObjectURL(blob);
+
+从 Blob 中提取数据
+从Blob中读取内容的唯一方法是使用 FileReader。以下代码将 Blob 的内容作为类型数组读取：
+```javascript
+var reader = new FileReader();
+reader.addEventListener("loadend", function() {
+   // reader.result contains the contents of blob as a typed array
+});
+reader.readAsArrayBuffer(blob);
+```
+使用 FileReader 以外的方法读取到的内容可能会是字符串或是数据 URL。
+
+详细信息见https://developer.mozilla.org/zh-CN/docs/Web/API/Blob。
+
