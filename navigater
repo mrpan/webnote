@@ -1,0 +1,28 @@
+window.navigator
+返回一个navigator对象的引用,可以用它来查询一些关于运行当前脚本的应用程序的相关信息
+
+navigator.cookieEnabled
+返回一个布尔值,表明当前浏览器是否启用了cookies
+
+navigator.language
+返回一个字符串,表明当前浏览器的语言种类.
+
+navigator.onLine
+返回一个布尔值,表明当前浏览器是否正常联网
+
+navigator.userAgent
+返回当前浏览器的user agent字符串.
+
+msSaveBlob()方法
+保存文件或者blob到硬盘
+```javascript
+句法
+var retVal = navigator.msSaveBlob（blob，defaultName）;
+参数
+blob [in]
+类型：任何
+defaultName [in，可选]
+类型：DOMString
+retVal [out，retval]
+类型：布尔值
+```
