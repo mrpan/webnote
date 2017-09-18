@@ -1,0 +1,60 @@
+<html>
+<style>
+     .sector{
+     	cursor: pointer;
+     }
+</style>
+<body>
+ 
+ 
+<svg id ="limit-svg" width="880" height="350" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<!-- <g> -->
+ <!--  <image xlink:href="img/one.png" x="0" y="0" height="350px" width="880px"/> -->
+<!--   <image class="sector" id="sector1" xlink:href="img/s.png" x="185" y="40" height="16px" width="18px"/>
+  <text x="80" y="115" fill="red">test1</text>
+  <text x="185" y="65" font-size="10" fill="red">test1</text> -->
+ <!-- </g> -->
+</svg>
+  <script src="js/jquery-2.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+ <script>
+ var svg =document.getElementById('limit-svg');
+ var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+ newElement.setAttribute("id","zoomandpan")
+
+    document.getElementById('limit-svg').appendChild(newElement);
+    var circleElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+circleElement.setAttribute("cx","100");
+circleElement.setAttribute("cy","100");
+circleElement.setAttribute("r","50");
+circleElement.setAttribute("fill","red");
+$("#limit-svg").append(circleElement);
+circleElement.addEventListener("click", function(){ alert("Hello World!"); });
+circleElement.addEventListener("mouseover", function(){
+  console.log(this)
+  this.setAttribute("fill","green");
+  this.setAttribute("style","cursor:pointer");
+});
+circleElement.addEventListener("mouseout", function(){
+  this.setAttribute("fill","red");
+});
+var pt  = svg.createSVGPoint();
+svg.addEventListener("mousedown", function(event){
+  console.log(event);
+  var x =event.clientX;
+  var y =event.clientY;
+  pt.x =x;
+  pt.y =y;
+
+});
+svg.addEventListener("mousemove", function(event){
+   var currentMatrix = this.getCTM();
+    svg.setAttribute("fill","green");
+   // console.log(currentMatrix)
+   // svg.translate(event.clientX-pt.x,event.clientY-pt.y);
+});
+svg.addEventListener("mouseup", function(event){
+  // console.log("mouseup")
+});
+ </script>
+</body>
+</html>
