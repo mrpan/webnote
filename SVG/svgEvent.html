@@ -20,7 +20,7 @@
  var svg =document.getElementById('limit-svg');
  var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'g');
  newElement.setAttribute("id","container")
-newElement.setAttribute("transform","translate(0,0)")
+newElement.setAttribute("transform","translate(0,0) scale(1)")
     document.getElementById('limit-svg').appendChild(newElement);
     var circleElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
 circleElement.setAttribute("cx","100");
@@ -47,27 +47,29 @@ var pan=false;
 
  var nowtransforms=0;
  var flag;
+ var scale=0;
+  
 svg.addEventListener("mousedown", function(event){
-  console.log(event);
   var x =event.clientX;
   var y =event.clientY;
   pt.x =x;
   pt.y =y;
    pan=true;
-  var transforms= $("#container").attr("transform"); 
-  nowtransforms = getTranslation(transforms);
+  
   flag=0;
+  var transforms= $("#container").attr("transform"); 
+
+   nowtransforms = getTranslation(transforms);
+   scale=getScale(transforms);
 });
 
 svg.addEventListener("mousemove", function(event){
-   var currentMatrix = this.getScreenCTM();
    
     flag=1;
    if(pan){
      var tempx = nowtransforms[0]+event.clientX-pt.x;
-     console.log("tempx="+tempx);
      var tempy=nowtransforms[1]+event.clientY-pt.y;
-   var trans = "translate("+tempx+","+tempy+")";
+   var trans = "translate("+tempx+","+tempy+")scale("+scale[0]+")";
     newElement.setAttribute("transform",trans);
    }
     
@@ -80,7 +82,38 @@ svg.addEventListener("mouseup", function(event){
    
   // console.log("mouseup")
 });
-
+svg.addEventListener("wheel",function(event){
+    var transforms= $("#container").attr("transform"); 
+  nowtransforms = getTranslation(transforms);
+  scale=getScale(transforms);
+  var deltaY =event.deltaY;
+  var deltaX =event.deltaX;
+  var centerX = event.clientX;
+  var centerY = event.clientY;
+  
+// translate(-centerX*(factor-1), -centerY*(factor-1))
+// scale(factor)
+  if(deltaY<0){
+    var factor = 1.065;
+    nowtransforms[0]= centerX - factor * (centerX - nowtransforms[0])
+    nowtransforms[1] = centerY - factor * (centerY - nowtransforms[1])
+    factor *=scale[0]
+    scale[0]=factor
+    //  console.log(nowtransforms);
+    // console.log((-centerX*(factor-1))+"======"+(-centerY*(factor-1)));
+    
+    var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
+    newElement.setAttribute("transform",trans);
+  }else{
+   var factor = 1-0.065;
+    nowtransforms[0]= centerX - factor * (centerX - nowtransforms[0])
+    nowtransforms[1] = centerY - factor * (centerY - nowtransforms[1])
+    factor *=scale[0]
+    scale[0]=factor
+   var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
+    newElement.setAttribute("transform",trans);
+  }
+})
 function getTranslation(transform) {
   // Create a dummy g for calculation purposes only. This will never
   // be appended to the DOM and will be discarded once this function 
@@ -94,9 +127,26 @@ function getTranslation(transform) {
   // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
   // its SVGMatrix. 
   var matrix = g.transform.baseVal.consolidate().matrix;
-  console.log(g.transform.baseVal)
+  // console.log(g.transform.baseVal.consolidate())
   // As per definition values e and f are the ones for the translation.
   return [matrix.e, matrix.f];
+}
+function getScale(transform) {
+  // Create a dummy g for calculation purposes only. This will never
+  // be appended to the DOM and will be discarded once this function 
+  // returns.
+  var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  
+  // Set the transform attribute to the provided string value.
+  g.setAttributeNS(null, "transform", transform);
+  
+  // consolidate the SVGTransformList containing all transformations
+  // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
+  // its SVGMatrix. 
+  var matrix = g.transform.baseVal.consolidate().matrix;
+  // console.log(g.transform.baseVal.consolidate())
+  // As per definition values e and f are the ones for the translation.
+  return [matrix.a, matrix.d];
 }
  </script>
 </body>
