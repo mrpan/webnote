@@ -9,3 +9,5 @@ web开发中遇到的问题以及随笔记录
 **FileReader对象**
 
 **Blob对象**
+
+**rem/em/px区别**
