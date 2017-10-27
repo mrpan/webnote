@@ -31,3 +31,8 @@ http://search.maven.org/
           <url>http://repo.boundlessgeo.com/main</url>
         </repository>
     </repositories>
+
+5、maven package 报错
+在用mvn package命令打包时候报错空指针的错误，查找了半天也没查出具体原因，最后在日志里找到了读取jar错误的日志
+错误原因：jar下载中断造成的读取jar包错误
+解决方法：如果只有一个jar包错误，只需删除对应jar重新下载即可，由于我仓库里报错的jar较多，所以删除了仓库，重新下载后，打包正常。
