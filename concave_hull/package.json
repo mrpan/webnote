@@ -1,0 +1,19 @@
+{
+  "name": "concave_hull",
+  "version": "1.0.0",
+  "description": "openlayers use concaveman",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch  & http-server -c 0"
+  },
+  "author": "mrpan",
+  "license": "MIT",
+  "dependencies": {
+    "concaveman": "^1.1.1",
+    "html-webpack-plugin": "^2.30.1",
+    "ol": "^4.4.2",
+    "webpack": "^3.8.1"
+  }
+}
