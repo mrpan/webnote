@@ -2,10 +2,10 @@
 * @Author: giserpan
 * @Date:   2017-11-01 11:42:12
 * @Last Modified by:   giserpan
-* @Last Modified time: 2017-11-01 17:24:58
+* @Last Modified time: 2017-11-02 09:06:31
 */
 'use strict';
-
+var concaveman = require('concaveman');
 import Map from 'ol/map';
 import View from 'ol/view';
 import TileLayer from 'ol/layer/tile';
@@ -18,6 +18,9 @@ import Fill from 'ol/style/fill';
 import Stroke from 'ol/style/stroke';
 import Circle from 'ol/style/circle';
 import Draw from 'ol/interaction/draw';
+import $ from "jquery";
+import Polygon from 'ol/geom/polygon';
+import Feature from 'ol/feature';
 var map =new Map({
   target: 'map',
   layers: [
@@ -73,3 +76,20 @@ function addInteractions(type) {
 
 }
 addInteractions("Point");
+$(".conButton").click(function(){
+	var features = source.getFeatures();
+	var points =[];
+	for(var i=0;i<features.length;i++){
+		var feature = features[i];
+		var point =feature.getGeometry();
+		points.push(point.getCoordinates())
+	}
+	var polygon = concaveman(points);
+	
+	var olPolygon = new Polygon([polygon])
+	var feature = new Feature({
+		geometry:olPolygon,
+		name:"concave"
+	})
+    source.addFeature(feature);
+})
