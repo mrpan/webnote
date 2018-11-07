@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>grid</title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		div{
+			height: 100%;
+			width: 100%;
+			display: grid;
+		}
+		.container{
+			/*grid-template-columns:[第一根纵线] 80px [纵线2] auto [纵线3] 80px [最后的结束线];
+			grid-template-rows: 25% 100px auto 60px;*/
+			grid-template-columns: 1fr 1fr 1fr;
+    		grid-template-rows: 1fr 1fr 1fr 1fr;
+			grid-template-areas: 
+				"葡萄 葡萄 葡萄"
+       			 "龙虾 养鱼 养鱼"
+        		"龙虾 养鱼 养鱼"
+        		"西瓜 西瓜 西瓜";
+        	grid-row-gap: 10px;
+        	grid-column-gap: 10px;
+			
+		}
+		.putao { 
+			grid-area: 葡萄; 
+			background-color:red;
+			justify-items: center;
+			align-content: center;
+		}
+		.longxia { grid-area: 龙虾; 
+			background-color:green;
+			justify-items: center;
+			align-content: center;/*align-content则是指明垂直方向每一行grid元素的分布方式*/
+			grid-column-start: 1;/*子项开始的column位置*/
+			grid-row-start: 3;
+		}
+		.yangyu { grid-area: 养鱼; 
+			background-color:blue;
+			justify-items: center;
+			align-content: center;
+		}
+		.xigua { grid-area: 西瓜; 
+			background-color:yellow;
+			justify-items: center;
+			align-content: center;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+	<div class="putao">葡萄</div>
+    <div class="longxia">龙虾</div>
+    <div class="yangyu">养鱼</div>
+    <div class="xigua">西瓜</div>
+	</div>
+</body>
+</html>
